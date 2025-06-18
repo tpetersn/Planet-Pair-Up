@@ -1,5 +1,6 @@
 <script setup>
     import IconPlanet from "@/components/icons/IconPlanet.vue";
+    import { RouterView } from "vue-router";
 </script>
 
 <template>
@@ -20,9 +21,11 @@
         <h3>Select Difficulty Level</h3>
         
         <div class="buttons">
-          <button class="easy">Easy</button>
-          <button class="medium">Medium</button>
-          <button class="hard">Hard</button>
+          <button class="easy" variant="primary" @click="$router.push('/easy')">Easy</button>
+          <button class="medium" variant="primary" @click="$router.push('/medium')">Medium</button>
+          <button class="hard" variant="primary" @click="$router.push('/hard')">Hard</button>
+
+
         </div>
       </div>
 
@@ -33,9 +36,10 @@
 
 <style scoped>
 .home-container {
+  width: 100%;
+  min-height: 100vh;
   background: url('../images/planetBackground.png') no-repeat center center fixed;
   background-size: cover;
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,9 +75,12 @@ h2 {
 
 .buttons {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   gap: 1rem;
   margin-top: 1rem;
+  margin-left: 8rem;
+  margin-right: 8rem;
 }
 
 button {
@@ -105,5 +112,17 @@ button {
   text-decoration: none;
   color: black;
   font-weight: bold;
+}
+
+@media (min-width: 1024px) {
+  .content-box {
+    max-width:1000px;
+    padding: 4rem;
+    margin: auto;
+  }
+  .buttons{
+    margin-left: 15rem;
+    margin-right: 15rem;
+  }
 }
 </style>
