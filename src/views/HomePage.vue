@@ -55,6 +55,7 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
+/* texts */
 h1 {
   font-size: 2rem;
 }
@@ -73,6 +74,8 @@ h2 {
   margin-top: 2rem;
 }
 
+
+/* buttons */
 .buttons {
   display: flex;
   flex-direction: column;
@@ -106,8 +109,9 @@ button {
   background-color: #d95454;
 }
 
+/* breadcrumb */
 .home-link {
-  display: block;
+  display: inline-block;
   margin-top: 2rem;
   text-decoration: none;
   color: black;
