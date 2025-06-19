@@ -3,6 +3,7 @@ import EasyGame from '../views/EasyGame.vue'
 import MediumGame from '../views/MediumGame.vue'
 import HardGame from '../views/HardGame.vue'
 import HomePage from '../views/HomePage.vue'
+import MockGame from '../views/MockGame.vue'
 
 
 const router = createRouter({
@@ -27,6 +28,11 @@ const router = createRouter({
       path: '/hard',
       name: 'hard',
       component: HardGame,
+    },
+    {
+      path: '/mock',
+      name: 'mock',
+      component: MockGame,
     },
   ],
 })

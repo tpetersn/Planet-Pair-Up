@@ -6,7 +6,7 @@
 <template>
   <div class="home-container">
     <div class="content-box">
-      <h1>Welcome to <em>Planet Pair-Up <IconPlanet /></em></h1>
+      <h1><IconPlanet /> Welcome to <em>Planet Pair-Up <IconPlanet /></em></h1>
       <h2>The outer space memory theme game!</h2>
       <div class="instructions">
         <h3>How to play?</h3>
@@ -24,6 +24,7 @@
           <button class="easy" variant="primary" @click="$router.push('/easy')">Easy</button>
           <button class="medium" variant="primary" @click="$router.push('/medium')">Medium</button>
           <button class="hard" variant="primary" @click="$router.push('/hard')">Hard</button>
+          <button class="hard" variant="primary" @click="$router.push('/mock')">mockup</button>
 
 
         </div>
