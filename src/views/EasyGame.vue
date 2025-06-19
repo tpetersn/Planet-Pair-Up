@@ -150,7 +150,6 @@ onMounted(() => {
 <style scoped>
 .easy-game-container {
   min-height: 100vh;
-  background: url('../images/planetBackground.png') no-repeat center center fixed;
   background-size: cover;
   display: flex;
   justify-content: center;
@@ -217,7 +216,7 @@ onMounted(() => {
 }
 
 .score-box-timer {
-    background-color: #df562898;
+  background-color: #df562898;
   padding: 0.5rem 1rem;
   border-radius: 5px;
   font-weight: bold;

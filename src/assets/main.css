@@ -6,7 +6,7 @@ html, body, #app {
 }
 
 body {
-  background: url('/images/planetBackground.png') no-repeat center center fixed;
+  background: url('/images/enhancedBackground.png') no-repeat center center fixed;
   background-size: cover;
 }
 

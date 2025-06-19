@@ -150,7 +150,6 @@ onMounted(() => {
 <style scoped>
 .easy-game-container {
   min-height: 100vh;
-  background: url('../images/planetBackground.png') no-repeat center center fixed;
   background-size: cover;
   display: flex;
   justify-content: center;
