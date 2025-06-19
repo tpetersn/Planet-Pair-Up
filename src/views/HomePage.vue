@@ -14,6 +14,7 @@
           Select tiles until you match two tiles with the same image on them. <br />
           The goal is to match all pairs in the least amount of moves. <br />
           If you complete the game in the least amount of moves, it will be saved as your best for that difficulty.
+
         </p>
       </div>
 
@@ -21,9 +22,9 @@
         <h3>Select Difficulty Level</h3>
         
         <div class="buttons">
-          <button class="easy" variant="primary" @click="$router.push('/easy')">Easy</button>
-          <button class="medium" variant="primary" @click="$router.push('/medium')">Medium</button>
-          <button class="hard" variant="primary" @click="$router.push('/hard')">Hard</button>
+          <button class="easy" variant="primary" @click="$router.push('/easy')">Easy <br> 3x2 grid & 10s to memorize</button>
+          <button class="medium" variant="primary" @click="$router.push('/medium')">Medium <br> 4x2 grid & 6s to memorize</button>
+          <button class="hard" variant="primary" @click="$router.push('/hard')">Hard <br> 5x2 grid & 4s to memorize</button>
           <button class="hard" variant="primary" @click="$router.push('/mock')">mockup</button>
 
 
@@ -39,21 +40,22 @@
 .home-container {
   width: 100%;
   min-height: 100vh;
-  background: url('../images/planetBackground.png') no-repeat center center fixed;
-  background-size: cover;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 2rem;
+  align-items: flex-start;
+  padding: 1rem;
 }
 
 .content-box {
   background: rgba(255, 255, 255, 0.85);
   border-radius: 20px;
-  padding: 2rem;
+  padding: 1rem;
   max-width: 600px;
   text-align: center;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* texts */
@@ -95,6 +97,7 @@ button {
   font-weight: bold;
   cursor: pointer;
   font-size: 1rem;
+  margin: 0 1.8rem;
 }
 
 .easy {
@@ -110,10 +113,15 @@ button {
   background-color: #d95454;
 }
 
+.game-info {
+  margin-top: 1.8rem;
+}
+
 /* breadcrumb */
 .home-link {
   display: inline-block;
-  margin-top: 2rem;
+  margin-top: 5rem;
+  margin-bottom: -1rem;
   text-decoration: none;
   color: black;
   font-weight: bold;
