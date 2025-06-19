@@ -1,5 +1,10 @@
 # SEG3125-memory-game
 
+This is a planet themed memory game named "Plannet Pair-Up" for the game assignment of my SEG3125 course.
+
+
+
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
