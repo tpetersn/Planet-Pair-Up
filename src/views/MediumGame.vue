@@ -215,7 +215,15 @@ onMounted(() => {
   gap: 0.5rem;
 }
 
-.score-box-timer,
+.score-box-timer {
+  background-color: #df562898;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  color: white;
+  font-size: 1.25rem;
+  border: 2px solid white;
+}
 .score-box-moves,
 .score-box-best,
 .reset-button {
