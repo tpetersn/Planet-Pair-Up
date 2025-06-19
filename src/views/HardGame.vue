@@ -1,45 +1,151 @@
-<script setup>
-    import Tile from '../components/Tile.vue'
-</script>
-
-
 <template>
   <div class="easy-game-container">
     <div class="content-box">
       <!--Header row -->
       <div class="header-row">
-        <div class="header-left">Planet Pair-Up</div>
-        <div class="header-right">Hard Mode</div>
+        <div class="header-inner">
+          <div class="header-left">Planet Pair-Up</div>
+          <div class="header-right">Hard Mode</div>
+        </div>
       </div>
 
-      <!--scoring row -->
-      <div class="score-row">
-        <div class="score-box-moves">Moves - #</div>
-        <div class="score-box-best">Best - #</div>
+
+      <!-- Top Controls: Timer, Moves, Best, Reset -->
+      <div class="top-controls">
+        
+        <div class="score-box-moves">Moves: {{ moves }}</div>
+        <div class="score-box-best">Best: {{ hardBestScore ?? '--' }}</div>
+        
       </div>
 
       <!-- grid -->
       <div class="tile-grid">
-        <div v-for="i in 10" :key="i" class="tile"></div>
+        <Tile
+          v-for="(tile, index) in tiles"
+          :key="index"
+          :tile="tile"
+          @flip="flipTile(index)"
+        />
       </div>
+
+      <!-- countdown timer -->
+       <div class="timer-box">
+        <div class="score-box-timer">Timer: {{ timer }} seconds</div>
+       </div>
 
       <!-- buttons -->
       <div class="button-row">
-        <button class="btn start">Start</button>
-        <button class="btn restart">Restart</button>
+        <button class="btn start" @click="startGame">Start</button>
+        <button class="reset-button" @click="resetHardBestScore">Reset Best</button>
+        
       </div>
 
       <!-- breadcrumb footer -->
       <nav class="breadcrumb-nav">
-      <router-link to="/">Home</router-link>
-      <span class="separator">›</span>
-      <router-link to="/hard">Hard</router-link>
+        <router-link to="/">Home</router-link>
+        <span class="separator">›</span>
+        <router-link to="/easy">Hard</router-link>
       </nav>
     </div>
   </div>
 </template>
 
+<script setup>
+import { ref, onMounted } from 'vue'
+import Tile from '../components/Tile.vue'
 
+const tiles = ref([])
+const moves = ref(0)
+const hardBestScore = ref(JSON.parse(localStorage.getItem('hardBestScore')) || null)
+const gameStarted = ref(false)
+const isFlippingAllowed = ref(false)
+const flippedIndexes = ref([])
+const timer = ref(0)
+let timerInterval = null
+
+const imageOptions = ['greenPlanet.png', 'redPlanet.png', 'purplePlanet.png', 'blackPlanet.png', 'orangePlanet.png']
+
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5)
+}
+
+function createTileGrid() {
+  const duplicated = [...imageOptions, ...imageOptions]
+  const shuffled = shuffle(duplicated).map(image => ({
+    image,
+    flipped: false,
+    matched: false
+  }))
+  tiles.value = shuffled
+}
+
+function startGame() {
+  createTileGrid()
+  moves.value = 0
+  gameStarted.value = true
+  isFlippingAllowed.value = false
+  timer.value = 4
+
+  tiles.value.forEach(tile => tile.flipped = true)
+
+  if (timerInterval) clearInterval(timerInterval)
+  timerInterval = setInterval(() => {
+    if (timer.value > 0) {
+      timer.value--
+    } else {
+      clearInterval(timerInterval)
+      tiles.value.forEach(tile => tile.flipped = false)
+      isFlippingAllowed.value = true
+    }
+  }, 1000)
+}
+
+function flipTile(index) {
+  if (!isFlippingAllowed.value) return
+  const tile = tiles.value[index]
+  if (tile.flipped || tile.matched) return
+
+  tile.flipped = true
+  moves.value++
+  flippedIndexes.value.push(index)
+
+  if (flippedIndexes.value.length === 2) {
+    const [firstIndex, secondIndex] = flippedIndexes.value
+    const firstTile = tiles.value[firstIndex]
+    const secondTile = tiles.value[secondIndex]
+
+    if (firstTile.image === secondTile.image) {
+      firstTile.matched = true
+      secondTile.matched = true
+      flippedIndexes.value = []
+
+      if (tiles.value.every(t => t.matched)) {
+        if (!hardBestScore.value || moves.value < hardBestScore.value) {
+          hardBestScore.value = moves.value
+          localStorage.setItem('hardBestScore', JSON.stringify(hardBestScore.value))
+        }
+      }
+    } else {
+      isFlippingAllowed.value = false
+      setTimeout(() => {
+        firstTile.flipped = false
+        secondTile.flipped = false
+        flippedIndexes.value = []
+        isFlippingAllowed.value = true
+      }, 1000)
+    }
+  }
+}
+
+function resetHardBestScore() {
+  hardBestScore.value = null
+  localStorage.removeItem('hardBestScore')
+}
+
+onMounted(() => {
+  createTileGrid()
+})
+</script>
 
 <style scoped>
 .easy-game-container {
@@ -48,8 +154,8 @@
   background-size: cover;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 1rem;
+  align-items: flex-start;
+  padding: 1rem 1rem 2rem 1rem;
 }
 
 .content-box {
@@ -62,74 +168,79 @@
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
-/* header */
 .header-row {
   display: flex;
-  justify-content: space-around;
-  font-weight: bold;
-  font-size: 1.2rem;
+  justify-content: center;
   margin-bottom: 2.5rem;
+  width: 100%;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.header-inner {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
 }
 
 .header-left,
 .header-right {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
   background-color: #00bfff;
   border: 2px solid black;
   border-radius: 5px;
   color: black;
-}
-.header-left {
-  margin-right: -1rem;
-}
-.header-right {
-    margin-left: -1rem;
+  text-align: center;
+  min-width: 200px;
 }
 
 
-/* scoring */
-.score-row {
+
+.top-controls {
   display: flex;
   justify-content: space-around;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+
+  /* insert */
+}
+.timer-box{
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
-.score-box-moves {
-  background-color: #af9bdc;
+.score-box-timer,
+.score-box-moves,
+.score-box-best,
+.reset-button {
+  background-color: rgba(51, 8, 73, 0.8);
   padding: 0.5rem 1rem;
   border-radius: 5px;
   font-weight: bold;
   color: white;
-  margin-right: -2rem;
-}
-.score-box-best {
-  background-color: #af9bdc;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  font-weight: bold;
-  color: white;
-  margin-left: -2rem;
+  font-size: 1.25rem;
+  border: 2px solid white;
 }
 
-/* grid */
+.reset-button {
+  background-color: #d6543d;
+  cursor: pointer;
+}
+
 .tile-grid {
   display: grid;
-  grid-template-columns: repeat(5, 60px);
+  grid-template-columns: repeat(5, 85px);
   gap: 1rem;
   justify-content: center;
-  margin: 1.5rem 0;
-  margin-bottom: 3rem;
+  margin: 1.5rem 0 3rem 0;
 }
 
-.tile {
-  width: 60px;
-  height: 60px;
-  background-color: black;
-  border: 2px solid white;
-  border-radius: 5px;
-}
 
-/* buttons */
 .button-row {
   display: flex;
   justify-content: center;
@@ -146,17 +257,21 @@
   cursor: pointer;
 }
 
-.start {
+.btn:hover {
   background-color: #00e3e3;
   color: black;
 }
-
-.restart {
-  background-color: #d6543d;
-  color: white;
+.start:hover {
+  transform: scale(1.05);
 }
 
-/* breadcrumb */
+.start {
+  background-color: #00e3e3;
+  color: black;
+  border: 2px solid white;
+  font-size: 1.25rem;
+}
+
 .breadcrumb-nav {
   font-size: 0.75rem;
   margin-top: 4rem;
@@ -166,12 +281,12 @@
 
 .breadcrumb-nav a {
   color: white;
-  text-decoration: underline;
   transition: color 0.3s;
 }
 
 .breadcrumb-nav a:hover {
   color: #00e3e3;
+  background-color: transparent;
 }
 
 .separator {
@@ -179,27 +294,29 @@
   color: white;
 }
 
-
 @media (min-width: 1024px) {
   .content-box {
     width: 40rem;
   }
 
   .tile-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 60px);
-  gap: 2rem;
-  justify-content: center;
-  margin: 1.5rem 0;
-  margin-top: 3rem;
-  margin-bottom: 3rem;
+    grid-template-columns: repeat(5, 100px);
+    gap: 2rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .header-row {
+    margin-bottom: 1.5rem;
+  }
+
+  .top-controls {
+    margin-bottom: 1.5rem;
+  }
+  .header-row {
+  font-size: 1.5rem;
 }
-.header-row {
-  margin-bottom: 1.5rem;
-}
-.score-row {
-  margin-bottom: 0px
-}
+
 
 }
 </style>

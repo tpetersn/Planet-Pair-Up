@@ -21,8 +21,8 @@ defineProps({
 
 <style scoped>
 .tile {
-  width: 60px;
-  height: 60px;
+  width: 75px;
+  height: 75px;
   border: 2px solid white;
   border-radius: 5px;
   overflow: hidden;

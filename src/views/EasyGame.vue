@@ -3,15 +3,18 @@
     <div class="content-box">
       <!--Header row -->
       <div class="header-row">
-        <div class="header-left">Planet Pair-Up</div>
-        <div class="header-right">Easy Mode</div>
+        <div class="header-inner">
+          <div class="header-left">Planet Pair-Up</div>
+          <div class="header-right">Easy Mode</div>
+        </div>
       </div>
+
 
       <!-- Top Controls: Timer, Moves, Best, Reset -->
       <div class="top-controls">
         
         <div class="score-box-moves">Moves: {{ moves }}</div>
-        <div class="score-box-best">Best: {{ bestScore ?? '--' }}</div>
+        <div class="score-box-best">Best: {{ easyBestScore ?? '--' }}</div>
         
       </div>
 
@@ -33,7 +36,7 @@
       <!-- buttons -->
       <div class="button-row">
         <button class="btn start" @click="startGame">Start</button>
-        <button class="reset-button" @click="resetBestScore">Reset Best</button>
+        <button class="reset-button" @click="resetEasyBestScore">Reset Best</button>
         
       </div>
 
@@ -53,7 +56,7 @@ import Tile from '../components/Tile.vue'
 
 const tiles = ref([])
 const moves = ref(0)
-const bestScore = ref(JSON.parse(localStorage.getItem('easyBestScore')) || null)
+const easyBestScore = ref(JSON.parse(localStorage.getItem('easyBestScore')) || null)
 const gameStarted = ref(false)
 const isFlippingAllowed = ref(false)
 const flippedIndexes = ref([])
@@ -117,9 +120,9 @@ function flipTile(index) {
       flippedIndexes.value = []
 
       if (tiles.value.every(t => t.matched)) {
-        if (!bestScore.value || moves.value < bestScore.value) {
-          bestScore.value = moves.value
-          localStorage.setItem('easyBestScore', JSON.stringify(bestScore.value))
+        if (!easyBestScore.value || moves.value < easyBestScore.value) {
+          easyBestScore.value = moves.value
+          localStorage.setItem('easyBestScore', JSON.stringify(easyBestScore.value))
         }
       }
     } else {
@@ -134,8 +137,8 @@ function flipTile(index) {
   }
 }
 
-function resetBestScore() {
-  bestScore.value = null
+function resetEasyBestScore() {
+  easyBestScore.value = null
   localStorage.removeItem('easyBestScore')
 }
 
@@ -151,8 +154,8 @@ onMounted(() => {
   background-size: cover;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 1rem;
+  align-items: flex-start;
+  padding: 1rem 1rem 2rem 1rem;
 }
 
 .content-box {
@@ -167,26 +170,31 @@ onMounted(() => {
 
 .header-row {
   display: flex;
-  justify-content: space-around;
-  font-weight: bold;
-  font-size: 1.2rem;
+  justify-content: center;
   margin-bottom: 2.5rem;
+  width: 100%;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.header-inner {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
 }
 
 .header-left,
 .header-right {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
   background-color: #00bfff;
   border: 2px solid black;
   border-radius: 5px;
   color: black;
+  text-align: center;
+  min-width: 200px;
 }
-.header-left {
-  margin-right: -1rem;
-}
-.header-right {
-  margin-left: -1rem;
-}
+
+
 
 .top-controls {
   display: flex;
@@ -194,6 +202,9 @@ onMounted(() => {
   margin-bottom: 2rem;
   flex-wrap: wrap;
   gap: 0.5rem;
+
+
+  /* insert */
 }
 .timer-box{
   display: flex;
@@ -207,13 +218,13 @@ onMounted(() => {
 .score-box-moves,
 .score-box-best,
 .reset-button {
-  background-color: #af9bdc;
+  background-color: rgba(51, 8, 73, 0.8);
   padding: 0.5rem 1rem;
   border-radius: 5px;
   font-weight: bold;
   color: white;
-  font-size: 0.9rem;
-  border: none;
+  font-size: 1.25rem;
+  border: 2px solid white;
 }
 
 .reset-button {
@@ -223,7 +234,7 @@ onMounted(() => {
 
 .tile-grid {
   display: grid;
-  grid-template-columns: repeat(3, 60px);
+  grid-template-columns: repeat(3, 85px);
   gap: 1rem;
   justify-content: center;
   margin: 1.5rem 0 3rem 0;
@@ -257,6 +268,8 @@ onMounted(() => {
 .start {
   background-color: #00e3e3;
   color: black;
+  border: 2px solid white;
+  font-size: 1.25rem;
 }
 
 .breadcrumb-nav {
@@ -268,12 +281,12 @@ onMounted(() => {
 
 .breadcrumb-nav a {
   color: white;
-  text-decoration: underline;
   transition: color 0.3s;
 }
 
 .breadcrumb-nav a:hover {
   color: #00e3e3;
+  background-color: transparent;
 }
 
 .separator {
@@ -287,7 +300,7 @@ onMounted(() => {
   }
 
   .tile-grid {
-    grid-template-columns: repeat(3, 60px);
+    grid-template-columns: repeat(3, 100px);
     gap: 2rem;
     margin-top: 3rem;
     margin-bottom: 3rem;
@@ -300,5 +313,10 @@ onMounted(() => {
   .top-controls {
     margin-bottom: 1.5rem;
   }
+  .header-row {
+  font-size: 1.5rem;
+}
+
+
 }
 </style>

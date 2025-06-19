@@ -8,28 +8,47 @@
     <div class="content-box">
       <h1><IconPlanet /> Welcome to <em>Planet Pair-Up <IconPlanet /></em></h1>
       <h2>The outer space memory theme game!</h2>
+
+
       <div class="instructions">
         <h3>How to play?</h3>
         <p>
           Select tiles until you match two tiles with the same image on them. <br />
           The goal is to match all pairs in the least amount of moves. <br />
-          If you complete the game in the least amount of moves, it will be saved as your best for that difficulty.
+          If you complete the game while achieving a new lowest score, your score will be saved as the new best for that difficulty level. <br>Good Luck!
 
         </p>
       </div>
 
+
+         
+
       <div class="difficulty">
-        <h3>Select Difficulty Level</h3>
+        <h3>Select Difficulty Level to Play</h3>
         
         <div class="buttons">
-          <button class="easy" variant="primary" @click="$router.push('/easy')">Easy <br> 3x2 grid & 10s to memorize</button>
-          <button class="medium" variant="primary" @click="$router.push('/medium')">Medium <br> 4x2 grid & 6s to memorize</button>
-          <button class="hard" variant="primary" @click="$router.push('/hard')">Hard <br> 5x2 grid & 4s to memorize</button>
+          <button class="easy" variant="primary" @click="$router.push('/easy')">Easy</button>
+          <button class="medium" variant="primary" @click="$router.push('/medium')">Medium</button>
+          <button class="hard" variant="primary" @click="$router.push('/hard')">Hard</button>
           <button class="hard" variant="primary" @click="$router.push('/mock')">mockup</button>
-
-
         </div>
       </div>
+      <div class="descriptions">
+        <h3 class="descipt-title">Difficulty Level Descriptions</h3>
+        <ul class="descipt-list">
+          <li>
+            Easy - 3x2 grid & 10s to memorize
+          </li>
+          <li>
+            Medium - 4x2 grid & 6s to memorize
+          </li>
+          <li>
+            Hard - 5x2 grid & 4s to memorize
+          </li>
+        </ul>
+      </div>   
+
+
 
       <router-link to="/" class="home-link">Home</router-link>
     </div>
@@ -74,9 +93,22 @@ h2 {
 }
 
 .difficulty h3 {
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
+.descipt-list {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 1rem; 
+}
+.descriptions {
+  margin-top: 2rem;
+  border: 1px dotted rgb(168, 167, 167);
+  border-radius: 10px;
+}
+.descipt-title {
+  margin-top: 1rem;
+}
 
 /* buttons */
 .buttons {
@@ -119,12 +151,17 @@ button {
 
 /* breadcrumb */
 .home-link {
-  display: inline-block;
-  margin-top: 5rem;
-  margin-bottom: -1rem;
+  display: inline;
+  margin-top: 2.8rem;
+  margin-bottom: -0.8rem;
   text-decoration: none;
   color: black;
   font-weight: bold;
+  width: wrap;
+}
+.home-link:hover {
+  text-decoration: underline;
+  background-color: transparent;
 }
 
 @media (min-width: 1024px) {
@@ -137,5 +174,12 @@ button {
     margin-left: 15rem;
     margin-right: 15rem;
   }
+  .home-link {
+    margin-top: 2.8rem;
+    margin-bottom: -4rem;
+    display: inline-block;
+  }
+
 }
+
 </style>
