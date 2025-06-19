@@ -1,18 +1,14 @@
 <template>
   <div class="mock-game-container">
-    <!-- countdown timer  -->
-    <div class="timer-button">Timer: {{ timer }} seconds</div>
-
-    <!-- Header -->
-    <h2>Planet Pair-Up: Easy Mode</h2>
-
-    <!-- scoreboard counters -->
-    <div class="scoreboard">
-      <div>Moves: {{ moves }}</div>
-      <div>Best: {{ bestScore ?? '--' }}</div>
+    <!-- important values: timer, # of moves, best score, reset score -->
+    <div class="top-controls">
+      <div class="timer-button">Timer: {{ timer }} seconds</div>
+      <div class="score-button">Moves: {{ moves }}</div>
+      <div class="score-button">Best: {{ bestScore ?? '--' }}</div>
+      <button class="reset-button" @click="resetBestScore">Reset Best</button>
     </div>
 
-    <!-- tile grid -->
+    <!--tile Grid -->
     <div class="tile-grid">
       <Tile
         v-for="(tile, index) in tiles"
@@ -33,10 +29,10 @@
 import { ref, onMounted } from 'vue'
 import Tile from '../components/Tile.vue'
 
-// game constants
+//game constants
 const tiles = ref([])
 const moves = ref(0)
-const bestScore = ref(null)
+const bestScore = ref(JSON.parse(localStorage.getItem('easyBestScore')) || null)
 const gameStarted = ref(false)
 const isFlippingAllowed = ref(false)
 const flippedIndexes = ref([])
@@ -53,7 +49,7 @@ function shuffle(array) {
 
 //function for the initial grid creation
 function createTileGrid() {
-  const duplicated = [...imageOptions, ...imageOptions] // 3 images x2
+  const duplicated = [...imageOptions, ...imageOptions] // 3 images x2 = 6 tiles
   const shuffled = shuffle(duplicated).map(image => ({
     image,
     flipped: false,
@@ -62,14 +58,14 @@ function createTileGrid() {
   tiles.value = shuffled
 }
 
-//fuction for starting the game
+//function for starting the game, 10 seconds to memorize
 function startGame() {
   createTileGrid()
   moves.value = 0
   gameStarted.value = true
   isFlippingAllowed.value = false
   timer.value = 10
-
+  
   // flip and show all cards initially
   tiles.value.forEach(tile => tile.flipped = true)
 
@@ -78,28 +74,25 @@ function startGame() {
   timerInterval = setInterval(() => {
     if (timer.value > 0) {
       timer.value--
-
     } else {
       clearInterval(timerInterval)
       tiles.value.forEach(tile => tile.flipped = false)
       isFlippingAllowed.value = true
     }
-
   }, 1000)
 }
 
 //function for flipping and matching the tiles
 function flipTile(index) {
   if (!isFlippingAllowed.value) return
-
   const tile = tiles.value[index]
   if (tile.flipped || tile.matched) return
 
   tile.flipped = true
+  moves.value++ // Increment moves on every flip
   flippedIndexes.value.push(index)
 
   if (flippedIndexes.value.length === 2) {
-    moves.value++
     const [firstIndex, secondIndex] = flippedIndexes.value
     const firstTile = tiles.value[firstIndex]
     const secondTile = tiles.value[secondIndex]
@@ -112,6 +105,7 @@ function flipTile(index) {
       if (tiles.value.every(t => t.matched)) {
         if (!bestScore.value || moves.value < bestScore.value) {
           bestScore.value = moves.value
+          localStorage.setItem('easyBestScore', JSON.stringify(bestScore.value))
         }
       }
     } else {
@@ -124,6 +118,12 @@ function flipTile(index) {
       }, 1000)
     }
   }
+}
+
+//function to reset the best score
+function resetBestScore() {
+  bestScore.value = null
+  localStorage.removeItem('easyBestScore')
 }
 
 // create the grid once on mount
@@ -141,6 +141,14 @@ onMounted(() => {
   padding-top: 2rem;
 }
 
+.top-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
 .tile-grid {
   display: grid;
   grid-template-columns: repeat(3, 60px);
@@ -150,22 +158,28 @@ onMounted(() => {
   margin: 1.5rem 0;
 }
 
-.scoreboard,
 .controls {
-  margin: 1rem 0;
-  display: flex;
-  justify-content: space-around;
+  margin-top: 1rem;
 }
 
-.timer-button {
+.timer-button,
+.score-button,
+.reset-button {
   display: inline-block;
   background-color: #ff9800;
   color: white;
   font-weight: bold;
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem 1rem;
   border-radius: 5px;
-  margin-bottom: 1rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  min-width: 100px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+
+.reset-button {
+  background-color: #d6543d;
 }
 </style>
