@@ -1,12 +1,15 @@
 <script setup>
     import IconPlanet from "@/components/icons/IconPlanet.vue";
+    import IconPlanet1 from "@/components/icons/IconPlanet1.vue";
+    import IconPlanet2 from "@/components/icons/IconPlanet2.vue";
+    import IconPlanet6 from "@/components/icons/IconPlanet6.vue";
     import { RouterView } from "vue-router";
 </script>
 
 <template>
   <div class="home-container">
     <div class="content-box">
-      <h1><IconPlanet /> Welcome to <em>Planet Pair-Up <IconPlanet /></em></h1>
+      <h1 class="title"><IconPlanet1 /> Welcome to <em>Planet Pair-Up <IconPlanet2 /></em></h1>
       <h2>The outer space memory theme game!</h2>
 
 
@@ -30,7 +33,7 @@
           <button class="easy" variant="primary" @click="$router.push('/easy')">Easy</button>
           <button class="medium" variant="primary" @click="$router.push('/medium')">Medium</button>
           <button class="hard" variant="primary" @click="$router.push('/hard')">Hard</button>
-          <button class="hard" variant="primary" @click="$router.push('/mock')">mockup</button>
+          <!-- <button class="hard" variant="primary" @click="$router.push('/mock')">mockup</button> -->
         </div>
       </div>
       <div class="descriptions">
@@ -50,7 +53,8 @@
 
 
 
-      <router-link to="/" class="home-link">Home</router-link>
+      <router-link to="/" class="home-link"><IconPlanet6 />Home
+      </router-link>
     </div>
   </div>
 </template>
@@ -162,6 +166,10 @@ button {
 .home-link:hover {
   text-decoration: underline;
   background-color: transparent;
+}
+.title {
+  text-decoration: underline;
+  margin-bottom: 0.8rem;
 }
 
 @media (min-width: 1024px) {

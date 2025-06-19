@@ -13,8 +13,8 @@
       <!-- Top Controls: Timer, Moves, Best, Reset -->
       <div class="top-controls">
         
-        <div class="score-box-moves">Moves: {{ moves }}</div>
-        <div class="score-box-best">Best: {{ easyBestScore ?? '--' }}</div>
+        <div class="score-box-moves">Moves - {{ moves }}</div>
+        <div class="score-box-best">Best - {{ easyBestScore ?? '--' }}</div>
         
       </div>
 
@@ -36,7 +36,7 @@
       <!-- buttons -->
       <div class="button-row">
         <button class="btn start" @click="startGame">Start</button>
-        <button class="reset-button" @click="resetEasyBestScore">Reset Best</button>
+        <!-- <button class="reset-button" @click="resetEasyBestScore">Reset Best</button> -->
         
       </div>
 
@@ -155,7 +155,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 1rem 1rem 2rem 1rem;
+  padding: 3.25rem 1rem 2rem 1rem;
 }
 
 .content-box {
@@ -171,6 +171,7 @@ onMounted(() => {
 .header-row {
   display: flex;
   justify-content: center;
+  margin-top: -1.8rem;
   margin-bottom: 2.5rem;
   width: 100%;
   font-weight: bold;
@@ -186,8 +187,9 @@ onMounted(() => {
 .header-left,
 .header-right {
   padding: 0.5rem 1.5rem;
-  background-color: #00bfff;
+  background-color: #049dd5f5 ;
   border: 2px solid black;
+  text-decoration: underline;
   border-radius: 5px;
   color: black;
   text-align: center;
@@ -214,7 +216,17 @@ onMounted(() => {
   gap: 0.5rem;
 }
 
-.score-box-timer,
+.score-box-timer {
+    background-color: #df562898;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  color: white;
+  font-size: 1.25rem;
+  border: 2px solid white;
+}
+
+
 .score-box-moves,
 .score-box-best,
 .reset-button {
@@ -258,7 +270,7 @@ onMounted(() => {
 }
 
 .btn:hover {
-  background-color: #00e3e3;
+  background-color: #00d7b0;
   color: black;
 }
 .start:hover {
@@ -266,7 +278,7 @@ onMounted(() => {
 }
 
 .start {
-  background-color: #00e3e3;
+  background-color: #00d7b0;
   color: black;
   border: 2px solid white;
   font-size: 1.25rem;
@@ -316,7 +328,9 @@ onMounted(() => {
   .header-row {
   font-size: 1.5rem;
 }
-
+.easy-game-container {
+  padding: 7rem 1rem 2rem 1rem;
+}
 
 }
 </style>
