@@ -228,6 +228,7 @@ onMounted(() => {
   color: white;
   font-size: 1.25rem;
   border: 2px solid white;
+  margin-top: -1rem;
 }
 .score-box-moves,
 .score-box-best,
@@ -239,6 +240,7 @@ onMounted(() => {
   color: white;
   font-size: 1.25rem;
   border: 2px solid white;
+  margin-bottom: -1rem;
 }
 
 .reset-button {
@@ -269,6 +271,7 @@ onMounted(() => {
   font-size: 1rem;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: -1rem;
 }
 
 .btn:hover {
@@ -332,7 +335,8 @@ onMounted(() => {
   font-size: 1.5rem;
 }
 .easy-game-container {
-  padding: 7rem 1rem 2rem 1rem;
+  padding: 3rem 1rem;
+  margin-bottom: 10rem;
 }
 
 

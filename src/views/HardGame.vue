@@ -341,7 +341,7 @@ onMounted(() => {
   font-size: 1.5rem;
 }
 .easy-game-container {
-  padding: 7rem 1rem 2rem 1rem;
+  padding: 3rem 1rem 2rem 1rem;
 }
 
 
