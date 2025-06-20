@@ -23,7 +23,7 @@
           <br>for that difficulty level. The difficulty descriptions can be found below.
         </p>
         <p class="luck">
-          GOOD LUCK!
+          Enjoy & Good Luck!
 
         </p>
       </div>
@@ -39,6 +39,8 @@
           <button class="medium" variant="primary" @click="$router.push('/medium')">Medium</button>
           <button class="hard" variant="primary" @click="$router.push('/hard')">Hard</button>
           <!-- <button class="hard" variant="primary" @click="$router.push('/mock')">mockup</button> -->
+          <button class="expert" variant="primary" @click="$router.push('/expert')">Expert</button>
+          <button class="insane" variant="primary" @click="$router.push('/insane')">Insane</button>
         </div>
       </div>
       <div class="descriptions">
@@ -51,7 +53,13 @@
             Medium - 4x2 grid & 6s to memorize
           </li>
           <li>
-            Hard - 5x2 grid & 4s to memorize
+            Hard - 5x2 grid & 5s to memorize
+          </li>
+          <li>
+            Expert - 6x2 grid & 4s to memorize
+          </li>
+          <li>
+            Insane - 6x4 grid & 3s to memorize
           </li>
         </ul>
       </div>   
@@ -164,6 +172,15 @@ button {
 
 .hard {
   background-color: #d95454;
+}
+
+.expert {
+  background-color: #0400ffdc;
+}
+
+.insane {
+  background-color: #ac0050c0;
+  color: white;
 }
 
 .game-info {

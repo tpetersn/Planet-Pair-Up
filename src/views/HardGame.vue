@@ -98,7 +98,7 @@ function startGame() {
   moves.value = 0
   gameStarted.value = true
   isFlippingAllowed.value = false
-  timer.value = 4
+  timer.value = 5
 
   tiles.value.forEach(tile => tile.flipped = true)
 
@@ -220,8 +220,6 @@ onMounted(() => {
   flex-wrap: wrap;
   gap: 0.5rem;
 
-
-  /* insert */
 }
 .timer-box{
   display: flex;

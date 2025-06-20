@@ -5,17 +5,14 @@
       <div class="header-row">
         <div class="header-inner">
           <div class="header-left">Planet Pair-Up</div>
-          <div class="header-right">Medium Mode</div>
+          <div class="header-right">Insane Mode</div>
         </div>
       </div>
 
-
       <!-- Top Controls: Timer, Moves, Best, Reset -->
       <div class="top-controls">
-        
         <div class="score-box-moves">Moves - {{ moves }}</div>
-        <div class="score-box-best">Best - {{ medBestScore ?? '--' }}</div>
-        
+        <div class="score-box-best">Best - {{ insaneBestScore ?? '--' }}</div>
       </div>
 
       <!-- grid -->
@@ -29,17 +26,15 @@
       </div>
 
       <!-- countdown timer -->
-       <div class="timer-box">
+      <div class="timer-box">
         <div class="score-box-timer">Timer: {{ timer }} seconds</div>
-       </div>
+      </div>
 
       <!-- buttons -->
       <div class="button-row">
         <button class="btn start" @click="startGame">Start</button>
-        <!-- <button class="reset-button" @click="resetMedBestScore">Reset Best</button> -->
-        
       </div>
-      
+
       <!-- popup -->
       <PopUp :visible="gameOver" @close="gameOver = false">
         <template #title>
@@ -51,12 +46,11 @@
         <p>Or go to the main menu and choose a different difficulty.</p>
       </PopUp>
 
-
       <!-- breadcrumb footer -->
       <nav class="breadcrumb-nav">
         <router-link to="/">Home</router-link>
         <span class="separator">›</span>
-        <router-link to="/easy">Medium</router-link>
+        <router-link to="/insane">Insane</router-link>
       </nav>
     </div>
   </div>
@@ -69,7 +63,7 @@ import PopUp from '@/components/PopUp.vue'
 
 const tiles = ref([])
 const moves = ref(0)
-const medBestScore = ref(JSON.parse(localStorage.getItem('medBestScore')) || null)
+const insaneBestScore = ref(JSON.parse(localStorage.getItem('insaneBestScore')) || null)
 const gameStarted = ref(false)
 const isFlippingAllowed = ref(false)
 const flippedIndexes = ref([])
@@ -77,7 +71,11 @@ const timer = ref(0)
 let timerInterval = null
 const gameOver = ref(false)
 
-const imageOptions = ['greenPlanet.png', 'redPlanet.png', 'purplePlanet.png', 'blackPlanet.png']
+const imageOptions = [
+  'greenPlanet.png', 'redPlanet.png', 'purplePlanet.png', 'blackPlanet.png',
+  'orangePlanet.png', 'pinkPlanet.png', 'icePlanet.png', 'bluePlanet.png',
+  'tanPlanet.png', 'yellowPlanet.png', 'watermelonPlanet.png', 'whitePlanet.png'
+]
 
 function shuffle(array) {
   return array.sort(() => Math.random() - 0.5)
@@ -98,7 +96,7 @@ function startGame() {
   moves.value = 0
   gameStarted.value = true
   isFlippingAllowed.value = false
-  timer.value = 6
+  timer.value = 3
 
   tiles.value.forEach(tile => tile.flipped = true)
 
@@ -133,15 +131,13 @@ function flipTile(index) {
       secondTile.matched = true
       flippedIndexes.value = []
 
-    if (tiles.value.every(t => t.matched)) {
-      gameOver.value = true
-      if (!medBestScore.value || moves.value < medBestScore.value) {
-        medBestScore.value = moves.value
-        localStorage.setItem('medBestScore', JSON.stringify(medBestScore.value))
+      if (tiles.value.every(t => t.matched)) {
+        gameOver.value = true
+        if (!insaneBestScore.value || moves.value < insaneBestScore.value) {
+          insaneBestScore.value = moves.value
+          localStorage.setItem('insaneBestScore', JSON.stringify(insaneBestScore.value))
+        }
       }
-
-    }
-
     } else {
       isFlippingAllowed.value = false
       setTimeout(() => {
@@ -152,11 +148,6 @@ function flipTile(index) {
       }, 1000)
     }
   }
-}
-
-function resetMedBestScore() {
-  medBestScore.value = null
-  localStorage.removeItem('medBestScore')
 }
 
 onMounted(() => {
@@ -221,7 +212,6 @@ onMounted(() => {
   gap: 0.5rem;
 
 }
-
 .timer-box{
   display: flex;
   justify-content: space-around;
@@ -258,7 +248,7 @@ onMounted(() => {
 
 .tile-grid {
   display: grid;
-  grid-template-columns: repeat(4, 85px);
+  grid-template-columns: repeat(6, 70px);
   gap: 1rem;
   justify-content: center;
   margin: 1.5rem 0 3rem 0;
@@ -324,10 +314,11 @@ onMounted(() => {
   }
 
   .tile-grid {
-    grid-template-columns: repeat(4, 100px);
+    grid-template-columns: repeat(5,85);
     gap: 2rem;
     margin-top: 3rem;
     margin-bottom: 3rem;
+
   }
 
   .header-row {
@@ -340,10 +331,10 @@ onMounted(() => {
   .header-row {
   font-size: 1.5rem;
 }
-
 .easy-game-container {
   padding: 7rem 1rem 2rem 1rem;
 }
+
 
 }
 </style>

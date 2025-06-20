@@ -4,6 +4,8 @@ import MediumGame from '../views/MediumGame.vue'
 import HardGame from '../views/HardGame.vue'
 import HomePage from '../views/HomePage.vue'
 import MockGame from '../views/MockGame.vue'
+import ExpertGame from '@/views/ExpertGame.vue'
+import InsaneGame from '@/views/InsaneGame.vue'
 
 
 const router = createRouter({
@@ -33,6 +35,16 @@ const router = createRouter({
       path: '/mock',
       name: 'mock',
       component: MockGame,
+    },
+    {
+      path: '/expert',
+      name: 'expert',
+      component: ExpertGame,
+    },
+    {
+      path: '/insane',
+      name: 'insane',
+      component: InsaneGame,
     },
   ],
 })
