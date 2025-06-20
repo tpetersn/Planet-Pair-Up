@@ -39,6 +39,17 @@
         <!-- <button class="reset-button" @click="resetEasyBestScore">Reset Best</button> -->
         
       </div>
+      
+      <!-- popup -->
+      <PopUp :visible="gameOver" @close="gameOver = false">
+        <template #title>
+          <h2>Game Completed,</h2>
+          <h2>Well Done!</h2>
+        </template>
+        <p>You finished the game in <strong>{{ moves }}</strong> moves!</p>
+        <p>Close & Press Start to Play Again.</p>
+        <p>Or go to the main menu and choose a different difficulty.</p>
+      </PopUp>
 
       <!-- breadcrumb footer -->
       <nav class="breadcrumb-nav">
@@ -53,6 +64,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import Tile from '../components/Tile.vue'
+import PopUp from '@/components/PopUp.vue'
 
 const tiles = ref([])
 const moves = ref(0)
@@ -62,6 +74,8 @@ const isFlippingAllowed = ref(false)
 const flippedIndexes = ref([])
 const timer = ref(0)
 let timerInterval = null
+const gameOver = ref(false)
+
 
 const imageOptions = ['greenPlanet.png', 'redPlanet.png', 'purplePlanet.png']
 
@@ -84,7 +98,7 @@ function startGame() {
   moves.value = 0
   gameStarted.value = true
   isFlippingAllowed.value = false
-  timer.value = 10
+  timer.value = 2
 
   tiles.value.forEach(tile => tile.flipped = true)
 
@@ -119,12 +133,14 @@ function flipTile(index) {
       secondTile.matched = true
       flippedIndexes.value = []
 
-      if (tiles.value.every(t => t.matched)) {
-        if (!easyBestScore.value || moves.value < easyBestScore.value) {
-          easyBestScore.value = moves.value
-          localStorage.setItem('easyBestScore', JSON.stringify(easyBestScore.value))
-        }
+    if (tiles.value.every(t => t.matched)) {
+      gameOver.value = true
+      if (!easyBestScore.value || moves.value < easyBestScore.value) {
+        easyBestScore.value = moves.value
+        localStorage.setItem('easyBestScore', JSON.stringify(easyBestScore.value))
       }
+    }
+
     } else {
       isFlippingAllowed.value = false
       setTimeout(() => {
@@ -221,7 +237,7 @@ onMounted(() => {
   border-radius: 5px;
   font-weight: bold;
   color: white;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   border: 2px solid white;
 }
 
@@ -284,7 +300,7 @@ onMounted(() => {
 }
 
 .breadcrumb-nav {
-  font-size: 0.75rem;
+  font-size: 1.1rem;
   margin-top: 4rem;
   color: white;
   margin-bottom: -4rem;
@@ -328,7 +344,7 @@ onMounted(() => {
   font-size: 1.5rem;
 }
 .easy-game-container {
-  padding: 7rem 1rem 2rem 1rem;
+  padding: 3rem 1rem 2rem 1rem;
 }
 
 }

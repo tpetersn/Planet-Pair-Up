@@ -10,15 +10,20 @@
   <div class="home-container">
     <div class="content-box">
       <h1 class="title"><IconPlanet1 /> Welcome to <em>Planet Pair-Up <IconPlanet2 /></em></h1>
-      <h2>The outer space memory theme game!</h2>
+      <h2 class="subtitle">The outer space memory theme game!</h2>
 
 
       <div class="instructions">
-        <h3>How to play?</h3>
+        <h3 class="howto">HOW TO PLAY?</h3>
         <p>
-          Select tiles until you match two tiles with the same image on them. <br />
-          The goal is to match all pairs in the least amount of moves. <br />
-          If you complete the game while achieving a new lowest score, your score will be saved as the new best for that difficulty level. <br>Good Luck!
+          Select a difficulty level and then click start.<br />
+          While the counter is running down, memorize the board of planets.<br />
+          The goal is to match all the planet pairs in the least amount of moves. <br />
+          If you complete the game while achieving a new lowest score, your score will be saved as the new best 
+          <br>for that difficulty level. The difficulty descriptions can be found below.
+        </p>
+        <p class="luck">
+          GOOD LUCK!
 
         </p>
       </div>
@@ -27,7 +32,7 @@
          
 
       <div class="difficulty">
-        <h3>Select Difficulty Level to Play</h3>
+        <h3>Select Difficulty Level to Begin Playing</h3>
         
         <div class="buttons">
           <button class="easy" variant="primary" @click="$router.push('/easy')">Easy</button>
@@ -40,7 +45,7 @@
         <h3 class="descipt-title">Difficulty Level Descriptions</h3>
         <ul class="descipt-list">
           <li>
-            Easy - 3x2 grid & 10s to memorize
+            Easy - 3x2 grid & 8s to memorize
           </li>
           <li>
             Medium - 4x2 grid & 6s to memorize
@@ -90,6 +95,19 @@ h2 {
   font-weight: 400;
   margin-bottom: 1rem;
 }
+.luck {
+  margin-top: -1rem;
+  font-weight: bold;
+}
+.howto {
+  font-weight: bold;
+  text-decoration: wavy underline;
+  margin-bottom: 1rem;
+}
+.subtitle {
+  margin-top: -1rem;
+  font-style: italic;
+}
 
 .instructions {
   margin-top: 1rem;
@@ -107,7 +125,6 @@ h2 {
 }
 .descriptions {
   margin-top: 2rem;
-  border: 1px dotted rgb(168, 167, 167);
   border-radius: 10px;
 }
 .descipt-title {

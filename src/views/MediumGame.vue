@@ -39,6 +39,18 @@
         <!-- <button class="reset-button" @click="resetMedBestScore">Reset Best</button> -->
         
       </div>
+      
+      <!-- popup -->
+      <PopUp :visible="gameOver" @close="gameOver = false">
+        <template #title>
+          <h2>Game Completed,</h2>
+          <h2>Well Done!</h2>
+        </template>
+        <p>You finished the game in <strong>{{ moves }}</strong> moves!</p>
+        <p>Close & Press Start to Play Again.</p>
+        <p>Or go to the main menu and choose a different difficulty.</p>
+      </PopUp>
+
 
       <!-- breadcrumb footer -->
       <nav class="breadcrumb-nav">
@@ -53,6 +65,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import Tile from '../components/Tile.vue'
+import PopUp from '@/components/PopUp.vue'
 
 const tiles = ref([])
 const moves = ref(0)
@@ -62,6 +75,7 @@ const isFlippingAllowed = ref(false)
 const flippedIndexes = ref([])
 const timer = ref(0)
 let timerInterval = null
+const gameOver = ref(false)
 
 const imageOptions = ['greenPlanet.png', 'redPlanet.png', 'purplePlanet.png', 'blackPlanet.png']
 
@@ -119,12 +133,15 @@ function flipTile(index) {
       secondTile.matched = true
       flippedIndexes.value = []
 
-      if (tiles.value.every(t => t.matched)) {
-        if (!medBestScore.value || moves.value < medBestScore.value) {
-          medBestScore.value = moves.value
-          localStorage.setItem('medBestScore', JSON.stringify(medBestScore.value))
-        }
+    if (tiles.value.every(t => t.matched)) {
+      gameOver.value = true
+      if (!medBestScore.value || moves.value < medBestScore.value) {
+        medBestScore.value = moves.value
+        localStorage.setItem('medBestScore', JSON.stringify(medBestScore.value))
       }
+
+    }
+
     } else {
       isFlippingAllowed.value = false
       setTimeout(() => {
@@ -281,7 +298,7 @@ onMounted(() => {
 }
 
 .breadcrumb-nav {
-  font-size: 0.75rem;
+  font-size: 1.1rem;
   margin-top: 4rem;
   color: white;
   margin-bottom: -4rem;
