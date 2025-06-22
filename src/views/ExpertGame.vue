@@ -333,4 +333,44 @@ onMounted(() => {
 
 
 }
+
+@media (max-width: 600px) {
+  .content-box {
+    width: 100%;
+    max-width: 90vw;
+    padding: 1.5rem;
+    padding-top: 4.2rem;
+    padding-bottom: 4rem;
+    margin-top: -2rem;
+  }
+
+  .header-left,
+  .header-right {
+    margin-top: -1rem;
+    min-width: unset;
+    width: 100%;
+    font-size: 1.2rem;
+  }
+
+  .top-controls,
+  .timer-box {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .tile-grid {
+    grid-template-columns: repeat(3, 75px);
+    gap: 0.75rem;
+  }
+
+  .btn {
+    width: 75%;
+  }
+
+  .breadcrumb-nav {
+    font-size: 1rem;
+    margin-top: 2rem;
+  }
+}
 </style>

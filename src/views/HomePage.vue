@@ -9,7 +9,7 @@
 <template>
   <div class="home-container">
     <div class="content-box">
-      <h1 class="title"><IconPlanet1 /> Welcome to <em>Planet Pair-Up <IconPlanet2 /></em></h1>
+      <h1 class="title"><IconPlanet1 class="icon1" /> Welcome to <em>Planet Pair-Up <IconPlanet2 class="icon2"/></em></h1>
       <h2 class="subtitle">The outer space memory theme game!</h2>
 
 
@@ -93,6 +93,8 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+
 
 /* texts */
 h1 {
@@ -223,5 +225,71 @@ button {
   }
 
 }
+
+@media (max-width: 600px) {
+  .content-box {
+    padding: 1rem;
+    max-width: 95vw;
+  }
+
+  .icon1 {
+  width:30px;
+  height: 30px;
+  }
+  .icon2 {
+  width:30px;
+  height: 30px;
+  }
+  .icon3 {
+  width:30px;
+  height: 30px;
+  }
+  .icon4 {
+  width:30px;
+  height: 30px;
+  }
+  .icon5 {
+  width:30px;
+  height: 30px;
+  }
+  .icon6 {
+  width:30px;
+  height: 30px;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .instructions {
+    font-size: 0.95rem;
+  }
+
+  .buttons {
+    max-width: 90%;
+    margin: 1rem auto;
+    gap: 0.8rem;
+  }
+
+  .buttons button {
+    font-size: 1rem;
+    padding: 0.6rem;
+  }
+
+  .descipt-title,
+  .descipt-list li {
+    font-size: 0.95rem;
+  }
+
+  .home-link {
+    margin-top: 2rem;
+    font-size: 1rem;
+  }
+}
+
 
 </style>
