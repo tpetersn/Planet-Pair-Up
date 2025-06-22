@@ -233,36 +233,24 @@ button {
   }
 
   .icon1 {
-  width:30px;
-  height: 30px;
+  width:28px;
+  height: 28px;
   }
   .icon2 {
-  width:30px;
-  height: 30px;
-  }
-  .icon3 {
-  width:30px;
-  height: 30px;
-  }
-  .icon4 {
-  width:30px;
-  height: 30px;
-  }
-  .icon5 {
-  width:30px;
-  height: 30px;
-  }
-  .icon6 {
-  width:30px;
-  height: 30px;
+  width:28px;
+  height: 28px;
   }
 
   .title {
-    font-size: 1.2rem;
+    font-size: 1.42rem;
   }
 
   .subtitle {
-    font-size: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .howto {
+    font-size: 1.2rem;
   }
 
   .instructions {
