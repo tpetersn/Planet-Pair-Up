@@ -9,7 +9,7 @@ defineProps({
     <!-- front of the tile... show image if flipped or matched -->
     <img
       v-if="tile.flipped || tile.matched"
-      :src="`../images/${tile.image}`"
+      :src="`/images/${tile.image}`"
       class="tile-image"
       alt="tile"
     />
